@@ -33,6 +33,12 @@ Useful for quick sampling or creating smaller datasets for testing and debugging
 
 ---
 
+## Sample Dataset
+All scripts are based on the FOCUS Sample Dataset for FinOps cost and usage data.  
+The dataset can be found [here](https://github.com/FinOps-Open-Cost-and-Usage-Spec/FOCUS-Sample-Data/tree/main/FOCUS-1.0).
+
+---
+
 ## Notes
 
 - Ensure the input CSV file paths are correctly updated in each script.
