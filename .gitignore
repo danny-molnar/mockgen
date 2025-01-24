@@ -1,0 +1,42 @@
+# Ignore CSV files
+*.csv
+
+# Ignore Python virtual environment directory
+.venv/
+pyenv/
+.python-version
+
+# Ignore compiled Python files
+*.pyc
+__pycache__/
+
+# Ignore binary files
+*.exe
+*.dll
+*.so
+*.dylib
+*.bin
+
+# Ignore temporary files and logs
+*.log
+*.tmp
+*.bak
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.idea/
+.vscode/
+
+# Ignore environment-related files
+.env
+.env.*
+
+include/
+lib/
+bin/
+
+pyvenv.cfg
+
