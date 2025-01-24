@@ -1,3 +1,18 @@
+"""
+This script generates 1,000,000 rows of mock billing data for AWS services
+using a sample dataset and the Faker library. It modifies key columns 
+with random and realistic values such as costs, quantities, dates, and 
+AWS-specific metadata. The generated data is saved to a CSV file 
+(focus-mock-data-1M.csv) and can be used for testing, simulations, 
+or performance evaluation of data processing workflows.
+
+Usage:
+1. Ensure the sample dataset file (focus_sample-data-new.csv) exists.
+2. Run the script to generate a new CSV file with mock data.
+
+Adjust the `num_rows` variable to control the size of the output dataset.
+"""
+
 import pandas as pd
 from faker import Faker
 import random

@@ -1,3 +1,24 @@
+"""
+This script reduces the size of a large CSV file to a target size (e.g., 1.5 GB) 
+by iteratively sampling rows. It reads the input file in chunks, samples rows 
+based on an adjustable fraction, and writes the reduced dataset to an output file.
+
+Key Features:
+- Handles large files efficiently using chunked processing.
+- Iteratively adjusts the sampling fraction to approximate the target file size.
+- Outputs the reduced dataset as a new CSV file.
+
+Usage:
+1. Place the large CSV file in the same directory as the script and update the 
+   `input_file` variable with its name.
+2. Run the script to generate a reduced dataset (`mock-data-reduced.csv`).
+3. Adjust the `target_size_bytes` variable to specify the desired output file size.
+
+Dependencies:
+- pandas
+- os
+"""
+
 import pandas as pd
 import os
 

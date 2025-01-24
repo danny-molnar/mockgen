@@ -1,3 +1,9 @@
+"""
+This script generates mock data for various cloud providers (AWS, Google Cloud, Oracle, and Microsoft) using a sample dataset. 
+It creates six months of billing data, including information such as billing periods, resource types, costs, and other metadata. 
+The script is designed to produce realistic data by leveraging the Faker library and the input sample dataset.
+"""
+
 import pandas as pd
 from faker import Faker
 import random

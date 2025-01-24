@@ -1,3 +1,8 @@
+"""
+Use this to extract a random sample of rows from the input CSV file 
+and save it to a new CSV file. You can adjust the number of rows to extract
+"""
+
 import csv
 import random
 
@@ -20,7 +25,6 @@ def extract_random_rows(input_file, output_file, num_rows=1000):
 
     print(f"Extracted {num_rows} random rows to {output_file}.")
 
-# Replace 'large_file.csv' with the path to your large CSV file
 input_csv = "focus-data-full.csv"
 output_csv = "random_sample.csv"
 
