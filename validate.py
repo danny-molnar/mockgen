@@ -1,5 +1,4 @@
 """
-validate_random_sample.py
 
 This script validates the content of a large CSV file by performing the following checks:
 1. **Random Sampling**: Selects a random sample of rows from the file to ensure comprehensive coverage.

@@ -1,5 +1,4 @@
 """
-generate_six_months_data.py
 
 This script generates a mock dataset spanning 6 months by extending and replicating the data
 from an existing large CSV file. It ensures all cloud providers are represented while maintaining
