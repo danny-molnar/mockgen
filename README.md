@@ -1,6 +1,6 @@
-# Mock Data Generator and Processor
+# Mock Data Generator and Validator
+This repository contains Python scripts for generating realistic mock billing and usage data and validating the generated datasets. These scripts are designed for efficient handling of large datasets, with options for custom date ranges and provider balance.
 
-This repository contains Python scripts for generating, processing, and downsizing large datasets for mock data generation and analysis. Each script serves a specific purpose, enabling efficient handling of large CSV files.
 
 ## File Overview
 
