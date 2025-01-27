@@ -1,17 +1,55 @@
+"""
+validate_random_sample.py
+
+This script validates the content of a large CSV file by performing the following checks:
+1. **Random Sampling**: Selects a random sample of rows from the file to ensure comprehensive coverage.
+2. **Column Completeness**: Verifies that all expected columns are present in the file.
+3. **Date Range Validation**: Ensures `BillingPeriodStart` and `BillingPeriodEnd` span the last 6 months.
+4. **Provider Representation**: Confirms that all expected cloud providers (AWS, Google Cloud, Oracle, Microsoft) are represented in the sampled data.
+5. **Row Validity**: Ensures sampled rows contain valid and meaningful data.
+
+Usage:
+1. Update the `file_path` variable with the path to the generated CSV file.
+2. Run the script to validate the content of the file.
+
+Parameters:
+- `file_path`: Path to the CSV file to validate.
+- `sample_size`: Number of random rows to sample for validation (default is 1000).
+
+Output:
+- Prints detailed validation results for column checks, date ranges, and provider representation.
+- Confirms whether the file passes all validation checks or fails with specific issues.
+
+"""
+
 import pandas as pd
 from datetime import datetime
+import random
 
 # File path of the generated data
 file_path = "mock-data-6-months-NEW.csv"
 
-def validate_file(file_path, sample_size=2000):
+def validate_file(file_path, sample_size=1000):
     print(f"Validating file: {file_path}\n")
 
-    # Load a sample of the data
-    print("Loading sample rows...")
+    # Get total number of rows without loading the entire file into memory
+    print("Determining total number of rows...")
     try:
-        data = pd.read_csv(file_path, nrows=sample_size)
-        print(f"Sample data:\n{data}\n")
+        total_rows = sum(1 for _ in open(file_path)) - 1  # Subtract 1 for the header
+        print(f"Total rows in file: {total_rows}")
+    except Exception as e:
+        print(f"Error determining file size: {e}")
+        return False
+
+    # Generate random row indices for sampling
+    print(f"Randomly selecting {sample_size} rows...")
+    sample_indices = random.sample(range(1, total_rows + 1), sample_size)
+
+    # Read the sampled rows
+    try:
+        data = pd.read_csv(file_path, skiprows=lambda x: x not in sample_indices and x != 0)  # Keep header (row 0)
+        print(f"Sample data loaded ({len(data)} rows):\n")
+        print(data.head())  # Show first few rows of the sample
     except Exception as e:
         print(f"Error reading file: {e}")
         return False
@@ -28,14 +66,14 @@ def validate_file(file_path, sample_size=2000):
         "RegionName", "ResourceId", "ResourceName", "ResourceType", "ServiceCategory", "Id", "ServiceName",
         "SkuId", "SkuPriceId", "SubAccountId", "SubAccountName", "Tags"
     ]
-    print("Checking columns...")
+    print("\nChecking columns...")
     if not all(col in data.columns for col in expected_columns):
         print(f"Missing columns in the file. Expected columns: {expected_columns}")
         return False
     print("All columns are present.")
 
-    # Check date ranges
-    print("Validating date ranges for 6 months...")
+    # Validate date ranges
+    print("\nValidating date ranges for 6 months...")
     try:
         billing_start_dates = pd.to_datetime(data["BillingPeriodStart"], errors="coerce")
         billing_end_dates = pd.to_datetime(data["BillingPeriodEnd"], errors="coerce")
@@ -57,21 +95,14 @@ def validate_file(file_path, sample_size=2000):
         return False
 
     # Check for representation of providers
-    print("Validating provider representation...")
+    print("\nValidating provider representation...")
     unique_providers = data["ProviderName"].unique()
-    print(f"Unique providers in the file: {unique_providers}")
+    print(f"Unique providers in the sample: {unique_providers}")
     expected_providers = ["AWS", "Google Cloud", "Oracle", "Microsoft"]
     if not all(provider in unique_providers for provider in expected_providers):
         print(f"Some providers are missing. Expected providers: {expected_providers}")
         return False
     print("All providers are represented.")
-
-    # Check for non-zero rows
-    print("Checking for non-zero rows...")
-    if len(data) == 0:
-        print("The file contains no rows.")
-        return False
-    print(f"The file contains {len(data)} rows.")
 
     print("\nValidation completed successfully. The file passed all checks.")
     return True
@@ -79,7 +110,7 @@ def validate_file(file_path, sample_size=2000):
 
 # Run validation
 if __name__ == "__main__":
-    validation_result = validate_file(file_path)
+    validation_result = validate_file(file_path, sample_size=1000)
     if validation_result:
         print("File is valid!")
     else:

@@ -1,3 +1,31 @@
+"""
+generate_six_months_data.py
+
+This script generates a mock dataset spanning 6 months by extending and replicating the data
+from an existing large CSV file. It ensures all cloud providers are represented while maintaining
+a balanced and realistic data distribution.
+
+Key Features:
+1. **6-Month Data Generation**: Takes a single month of data and extrapolates it across a 6-month period.
+2. **Balanced Provider Representation**: Ensures all major cloud providers (AWS, Google Cloud, Oracle, Microsoft) are represented.
+3. **Efficient Processing**: Utilizes chunk processing and multiprocessing to handle large files effectively.
+4. **Customizable Output**: Allows configuration of the number of rows per provider and number of months.
+
+Usage:
+1. Update the `input_file` and `output_file` variables with the paths to the source and target files.
+2. Run the script to generate the mock dataset.
+
+Parameters:
+- `input_file`: Path to the source CSV file (one-month data).
+- `output_file`: Path to save the generated 6-month dataset.
+- `rows_per_provider`: Number of rows to generate for each provider per month (default is 1000).
+- `months`: Number of months to generate (default is 6).
+- `num_workers`: Number of parallel workers for multiprocessing (default is 4).
+
+Output:
+- A new CSV file containing 6 months of extended mock data with balanced cloud provider representation.
+
+"""
 import pandas as pd
 import random
 from datetime import datetime, timedelta
