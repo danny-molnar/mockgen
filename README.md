@@ -4,36 +4,7 @@ This repository contains Python scripts for generating, processing, and downsizi
 
 ## File Overview
 
-### 1. `main.py`
-**Purpose:**  
-Generates 1,000,000 rows of mock billing data for AWS services using a sample dataset and the Faker library.  
-Key features include randomized costs, quantities, dates, and AWS-specific metadata.
-This script is ideal for testing, simulations, or evaluating data processing workflows.
-
----
-
-### 2. `gen.py`
-**Purpose:**  
-Generates large mock datasets for multiple cloud providers, including AWS, Google Cloud, Oracle, and Microsoft.  
-Produces six months of data with configurable row counts and realistic metadata for billing, resource usage, and service details.  
-
----
-
-### 3. `reduce.py`
-**Purpose:**  
-Reduces the size of a large CSV file by iteratively sampling rows to meet a target file size.  
-Ensures a representative subset of the original data is created for use in smaller-scale testing or analysis.  
-
----
-
-### 4. `extract.py`
-**Purpose:**  
-Extracts a random sample of rows from a large CSV file and saves them to a new file.  
-Useful for quick sampling or creating smaller datasets for testing and debugging.  
-
----
-
-### 5. `gen_6_month_mock_data.py`
+### 1. `gen_6_month_mock_data.py`
 **Purpose**:  
 Generates a mock dataset for billing and usage data spanning 6 months. The script ensures balanced representation of major cloud providers (AWS, Google Cloud, Oracle, Microsoft) and realistic data distribution.
 
@@ -50,7 +21,7 @@ Generates a mock dataset for billing and usage data spanning 6 months. The scrip
 
 ---
 
-### 6. `validate_new.py`
+### 2. `validate.py`
 **Purpose**:  
 Validates the content of a large CSV file to ensure it meets expected standards.
 
