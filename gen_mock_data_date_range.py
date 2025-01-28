@@ -7,11 +7,11 @@ Date Range:
 - Specify the desired start and end dates for data generation.
 
 Usage:
+- Provide the input file path containing the original data and the output file path for the generated mock data.
 - Adjust `start_date` and `end_date` variables for the desired date range.
+- Adjust `rows_per_provider` variable for the number of rows per provider per month.
 - Run the script to generate mock data for the defined date range.
 
-Output:
-- The generated data is saved in `mock_data_with_custom_date_range.csv`.
 """
 
 import pandas as pd
@@ -23,16 +23,13 @@ from datetime import datetime, timedelta
 fake = Faker()
 
 # Input and output file paths
-input_file = 'focus_sample_data.csv'
-output_file = 'mock_data_with_custom_date_range.csv'
+input_file = 'focus-data-full.csv'
+output_file = 'mock-custom-dates.csv'
 
-# Set the fixed date range
-start_date = datetime(2023, 7, 1)  # Start of the date range
-end_date = datetime(2023, 12, 31)  # End of the date range
-
-# Number of rows per provider per month
-rows_per_provider = 5000
-providers = ["AWS", "Google Cloud", "Oracle", "Microsoft"]
+# Define the date range and number of rows per provider
+start_date = datetime(2023, 1, 1)
+end_date = datetime(2023, 2, 28)
+rows_per_provider = 100
 
 # Function to generate a single mock row
 def generate_mock_row(row, provider, current_date):
@@ -47,28 +44,50 @@ def generate_mock_row(row, provider, current_date):
     row['RegionName'] = fake.random_element(elements=[
         'US East (N. Virginia)', 'EU (Frankfurt)', 'Asia Pacific (Singapore)', 'US West (Oregon)'
     ])
+    row['ChargeCategory'] = 'Usage'
+    row['ChargeDescription'] = fake.sentence(nb_words=6)
+    row['ChargeFrequency'] = fake.random_element(elements=['Usage-Based', 'Monthly', 'One-Time'])
+    row['ContractedCost'] = round(random.uniform(0, 100), 2)
+    row['EffectiveCost'] = round(random.uniform(0, 100), 2)
+    row['InvoiceIssuerName'] = provider
+    row['ListCost'] = round(random.uniform(0, 100), 2)
+    row['ListUnitPrice'] = round(random.uniform(0, 100), 2)
+    row['PricingCategory'] = 'Standard'
+    row['PricingQuantity'] = round(random.uniform(0, 10), 2)
+    row['PricingUnit'] = fake.random_element(elements=['Requests', 'GB', 'Hours'])
+    row['PublisherName'] = provider
     return row
 
-# Generate data for the specified date range
+# Function to generate mock data for the specified date range
 def generate_mock_data(input_file, output_file, start_date, end_date, rows_per_provider):
-    # Read the input sample file
-    df = pd.read_csv(input_file)
-
-    # Calculate the number of months in the range
-    all_rows = []
+    # Read the input file
+    df = pd.read_csv(input_file, low_memory=False, dtype=str)
+    
+    # Initialize an empty list for the output
+    output_data = []
+    
+    # Generate data for each provider and each month in the date range
+    providers = ["AWS", "Google Cloud", "Oracle", "Microsoft"]
     current_date = start_date
-
+    total_rows = 0
     while current_date <= end_date:
         for provider in providers:
             for _ in range(rows_per_provider):
-                random_row = df.iloc[random.randint(0, len(df) - 1)].copy()
-                all_rows.append(generate_mock_row(random_row, provider, current_date))
-        current_date += timedelta(days=30)  # Increment by one month
-
-    # Create a new DataFrame and save to the output file
-    output_df = pd.DataFrame(all_rows)
+                try:
+                    row = df.sample(n=1).iloc[0].to_dict()
+                    mock_row = generate_mock_row(row, provider, current_date)
+                    output_data.append(mock_row)
+                    total_rows += 1
+                    if total_rows % 1000 == 0:
+                        print(f"Generated {total_rows} rows so far...")
+                except Exception as e:
+                    print(f"Error generating row: {e}")
+        current_date += timedelta(days=30)
+    
+    # Convert the list to a DataFrame and save the generated data to the output file
+    output_df = pd.DataFrame(output_data)
     output_df.to_csv(output_file, index=False)
-    print(f"Mock data generated and saved to {output_file}")
+    print(f"Generated {total_rows} rows of mock data and saved to {output_file}")
 
 # Run the script
 generate_mock_data(input_file, output_file, start_date, end_date, rows_per_provider)
