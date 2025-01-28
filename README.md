@@ -21,7 +21,19 @@ Generates a mock dataset for billing and usage data spanning 6 months. The scrip
 
 ---
 
-### 2. `validate.py`
+### 2. `gen_mock_data_date_range.py`
+**Purpose**:  
+Generates mock dataset with customizable date ranges and rows per cloud provider. The script ensures not only the representation of the major cloud providers are mocked but also realistic consumption and billing information is generated, all well-distributed.
+
+**Usage**:
+- Provide input dataset in CSV.
+- Provide output CSV file name for mock dataset to be generated.
+- Define date range and rows per provider in script.
+- Run script.
+
+---
+
+### 3. `validate.py`
 **Purpose**:  
 Validates the content of a large CSV file to ensure it meets expected standards.
 
