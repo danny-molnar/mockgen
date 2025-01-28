@@ -1,7 +1,6 @@
 # Mock Data Generator and Validator
 This repository contains Python scripts for generating realistic mock billing and usage data and validating the generated datasets. These scripts are designed for efficient handling of large datasets, with options for custom date ranges and provider balance.
 
-
 ## File Overview
 
 ### 1. `gen_6_month_mock_data.py`
@@ -30,6 +29,8 @@ Generates mock dataset with customizable date ranges and rows per cloud provider
 - Provide output CSV file name for mock dataset to be generated.
 - Define date range and rows per provider in script.
 - Run script.
+
+**Note**: This script can take a significant amount of time to run, especially for large datasets. For example, generating 28,000 rows took approximately 100 minutes and produced a file size of about 15MB. Adjust the `rows_per_provider` variable accordingly to manage runtime and output file size.
 
 ---
 
