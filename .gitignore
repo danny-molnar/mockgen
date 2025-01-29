@@ -1,6 +1,9 @@
 # Ignore CSV files
 *.csv
 
+# Ignore Parquet files
+*.parquet
+
 # Ignore Python virtual environment directory
 .venv/
 pyenv/
@@ -39,4 +42,3 @@ lib/
 bin/
 
 pyvenv.cfg
-
