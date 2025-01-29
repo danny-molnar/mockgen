@@ -29,7 +29,7 @@ output_file = 'mock-custom-dates.csv'
 # Define the date range and number of rows per provider
 start_date = datetime(2024, 7, 1)
 end_date = datetime(2024, 12, 31)
-rows_per_provider = 40000
+rows_per_provider = 1000
 
 # Function to generate a single mock row
 def generate_mock_row(row, provider, current_date):
